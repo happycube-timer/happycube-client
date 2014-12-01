@@ -1,0 +1,25 @@
+{
+  "name": "rubiko",
+  "version": "0.0.0",
+  "description": "Rubik timer and trainer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.8.9",
+    "es6ify": "^1.5.1",
+    "gulp-browserify": "^0.5.0",
+    "gulp-connect": "^2.0.6",
+    "reactify": "^0.15.2",
+    "atomify-css": "^3.2.2",
+    "atomify": "^6.0.3"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "jquery": "^2.1.1",
+    "bootstrap": "^3.3.1"
+  }
+}
