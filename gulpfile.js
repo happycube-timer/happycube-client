@@ -15,12 +15,20 @@ gulp.task('scripts', function() {
   gulp.src('./app/js/main.js')
     .pipe(
       browserify({
-        insertGlobals : true,
         debug : true, //enable source maps
         transform: [reactify, es6ify]
       })
     )
     .pipe(gulp.dest('./dist/js/'));
+
+});
+
+gulp.task('assets', function () {
+  gulp.src('./assets/**/*')
+    .pipe(gulp.dest('./dist/assets'));
+
+  gulp.src('./node_modules/bootstrap/dist/fonts/*')
+    .pipe(gulp.dest('./dist/fonts'));
 });
 
 gulp.task('connect', function() {
@@ -53,4 +61,4 @@ gulp.task('watch', function () {
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'html', 'atomify', 'connect', 'watch']);
+gulp.task('default', ['scripts', 'html', 'atomify', 'assets', 'connect', 'watch']);
