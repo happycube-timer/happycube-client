@@ -18,8 +18,30 @@ header.logo {
     height: 64px;
   }
   h1 {
+    display: inline-block;
     font-weight: normal;
     font-family: 'Rubik One', sans-serif;
+  }
+
+  ul.navbar-nav {
+    li.active {
+      border-bottom: 2px solid white;
+    }
+
+    & > li > a  {
+      font-size: 18px;
+      color: white;
+
+      .glyphicon {
+        line-height: 18px;
+        margin-right: 0.5em;
+      }
+
+      &:hover {
+        background-color: white;
+        color: @brand-blue-1;
+      }
+    }
   }
 }
 
