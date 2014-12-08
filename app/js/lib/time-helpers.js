@@ -14,4 +14,10 @@ TimeHelpers.getClockObject = function (ms) {
   };
 };
 
+TimeHelpers.getClockString = function (ms) {
+  var {minutes, seconds, hundreths} = TimeHelpers.getClockObject(ms);
+
+  return `${minutes}:${seconds}.${hundreths}`;
+};
+
 module.exports = TimeHelpers;

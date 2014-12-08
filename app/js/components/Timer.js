@@ -2,16 +2,14 @@
 
 var React = require('react')
   , _ = require('lodash')
-  , getClockObject = require('../lib/time-helpers.js').getClockObject
+  , getClockString = require('../lib/time-helpers.js').getClockString
   , vent = require('../vent.js')
   , keymaster = require('keymaster');
 
 var Timer = React.createClass({
   getInitialState: function () {
     return {
-      minutes: '00'
-    , seconds: '00'
-    , hundreths: '00'
+      ellapsed: 0
     , running: false
     };
   },
@@ -28,7 +26,7 @@ var Timer = React.createClass({
         , start_time = this.start_time
         , ellapsed_ms = now - start_time;
 
-      this.setState(_.extend({ ellapsed: ellapsed_ms} , getClockObject(ellapsed_ms)));
+      this.setState({ellapsed: ellapsed_ms});
     }, 60);
   },
   stopTimer: function () {
@@ -51,10 +49,10 @@ var Timer = React.createClass({
     return (
       <div onKeyDown={this.onKeyDown}>
         <div>
-          {this.state.minutes}:{this.state.seconds}.{this.state.hundreths}
+          {getClockString(this.state.ellapsed)}
         </div>
       </div>
-    )
+    );
   }
 });
 

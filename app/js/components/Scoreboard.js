@@ -1,9 +1,8 @@
 /** @jsx React.DOM */
-/** @jsx React.DOM */
 
 var React = require('react')
   , _ = require('lodash')
-  , getClockObject = require('../lib/time-helpers.js').getClockObject
+  , getClockString = require('../lib/time-helpers.js').getClockString
   , vent = require('../vent.js');
 
 var Scoreboard = React.createClass({
@@ -38,28 +37,42 @@ var Scoreboard = React.createClass({
 
     localStorage.setItem('happy_cube:times', JSON.stringify(this.state.times));
   },
+  getAverage: function (n = this.state.times.length) {
+    var avg = _.reduce(_.first(this.state.times, n), (a,b) => a+b, 0) / n;
+
+    return getClockString(avg);
+  },
+  getBestTime: function () {
+    return getClockString(_.first(this.state.times));
+  },
   render: function () {
     return (
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Time</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {_.map(this.state.times, (time, pos) => {
-              var time = getClockObject(time);
-              return <tr>
-                <td>{pos + 1}</td>
-                <td>{time.minutes}:{time.seconds}:{time.hundreths}</td>
-                <td><span className='glyphicon glyphicon-remove' onClick={_.partial(this.removeTime, pos)}></span></td>
-              </tr>
-            })
-          }
-        </tbody>
-      </table>
+      <div>
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {_.map(this.state.times, (time, pos) => {
+                return <tr>
+                  <td>{pos + 1}</td>
+                  <td>{getClockString(time)}</td>
+                  <td><span className='glyphicon glyphicon-remove' onClick={_.partial(this.removeTime, pos)}></span></td>
+                </tr>
+              })
+            }
+          </tbody>
+        </table>
+
+        <h3>Your stats:</h3>
+        <p>Best time: {this.getBestTime()}</p>
+        <p>Overall average: {this.getAverage()}</p>
+        <p>Best 10 average: {this.getAverage(10)}</p>
+      </div>
     )
   }
 });
