@@ -8,6 +8,8 @@ var es6ify = require('es6ify');
 var reactify = require('reactify');
 var sass = require('gulp-sass');
 var atomify = require('atomify');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
@@ -23,6 +25,7 @@ gulp.task('scripts', function() {
 
 });
 
+// Copy assets to the dist folder
 gulp.task('assets', function () {
   gulp.src('./assets/**/*')
     .pipe(gulp.dest('./dist/assets'));
@@ -31,15 +34,17 @@ gulp.task('assets', function () {
     .pipe(gulp.dest('./dist/fonts'));
 });
 
+// Dev server
 gulp.task('connect', function() {
   connect.server({
     root: 'dist',
     livereload: false,
-    port: 4000
+    port: 4001
   });
 });
 
-gulp.task('atomify', function () {
+// Stylesheets
+gulp.task('stylesheets', function (done) {
   var atomifyConf = {
     css: {
       entry: './app/stylesheets/main.less'
@@ -47,18 +52,41 @@ gulp.task('atomify', function () {
     }
   };
 
-  atomify(atomifyConf);
+  atomify(atomifyConf, done);
 });
 
+// Reload browser
+gulp.task('browser-reload', function (done) {
+  browserSync.reload();
+  done();
+});
+
+// Copy html to dist folder
 gulp.task('html', function () {
   return gulp.src('./app/**/*.html').pipe(gulp.dest('./dist'));
 });
 
+gulp.task('browser-sync', function () {
+  browserSync({
+    proxy: 'localhost:4001'
+  , port: 4000
+  , open: false
+  });
+});
+
 gulp.task('watch', function () {
-  gulp.watch(['./app/**/*.less'], ['atomify']);
-  gulp.watch(['./app/**/*.html'], ['html']);
+  gulp.watch(['./app/**/*.less'], ['stylesheets', 'browser-reload']);
+  gulp.watch(['./app/**/*.html'], ['html', 'browser-reload']);
   gulp.watch(['./app/**/*.js'], ['scripts']);
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'html', 'atomify', 'assets', 'connect', 'watch']);
+gulp.task('default', [
+  'connect'
+, 'browser-sync'
+, 'scripts'
+, 'html'
+, 'stylesheets'
+, 'assets'
+, 'watch'
+]);
