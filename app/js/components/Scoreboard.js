@@ -48,25 +48,27 @@ var Scoreboard = React.createClass({
   render: function () {
     return (
       <div>
-        <table className='table'>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Time</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {_.map(this.state.times, (time, pos) => {
-                return <tr>
-                  <td>{pos + 1}</td>
-                  <td>{getClockString(time)}</td>
-                  <td><span className='glyphicon glyphicon-remove' onClick={_.partial(this.removeTime, pos)}></span></td>
-                </tr>
-              })
-            }
-          </tbody>
-        </table>
+        <div className='scoreboard'>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Time</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {_.map(this.state.times, (time, pos) => {
+                  return <tr>
+                    <td>{pos + 1}</td>
+                    <td>{getClockString(time)}</td>
+                    <td><span className='glyphicon glyphicon-remove' onClick={_.partial(this.removeTime, pos)}></span></td>
+                  </tr>
+                })
+              }
+            </tbody>
+          </table>
+        </div>
 
         <h3>Your stats:</h3>
         <p>Best time: {this.getBestTime()}</p>
