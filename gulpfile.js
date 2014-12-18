@@ -4,7 +4,7 @@ var gulp = require('gulp');
 // Plugins
 var browserify = require('gulp-browserify');
 var connect = require('gulp-connect');
-var es6ify = require('es6ify');
+var to5ify = require('6to5ify');
 var reactify = require('reactify');
 var sass = require('gulp-sass');
 var atomify = require('atomify');
@@ -17,8 +17,8 @@ gulp.task('scripts', function() {
   gulp.src('./app/js/main.js')
     .pipe(
       browserify({
-        debug : true, //enable source maps
-        transform: [reactify, es6ify]
+        debug : true //enable source maps
+      , transform: [reactify, to5ify]
       })
     )
     .pipe(gulp.dest('./dist/js/'));
