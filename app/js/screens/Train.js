@@ -1,12 +1,14 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react')
+  , Scanner = require('../components/Scanner.js');
 
 var TrainScreen = React.createClass({
   render: function () {
     return (
       <div>
         <h1>Train</h1>
+        <Scanner/>
       </div>
     );
   }

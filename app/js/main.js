@@ -12,6 +12,11 @@ var _ = require('lodash')
   , DefaultRoute = Router.DefaultRoute
   , RouteHandler = Router.RouteHandler;
 
+/**
+ * Load _.mixins
+ */
+require('./lib/utils.js');
+
 var App = React.createClass({
   render: function () {
     return (

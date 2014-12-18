@@ -1,0 +1,5 @@
+class ScanPoint {
+  constructor (options) {
+
+  }
+}
