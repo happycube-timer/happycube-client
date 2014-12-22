@@ -8,7 +8,7 @@ TimeHelpers.lpad = function (number, n_padding) {
 
 TimeHelpers.getClockObject = function (ms) {
   return {
-    hundreths: TimeHelpers.lpad(Math.floor(((ms / 100) % 1 ) * 100), 2)
+    hundreths: TimeHelpers.lpad(Math.floor(((ms / 1000) % 1 ) * 100), 2)
   , seconds: TimeHelpers.lpad(Math.floor((ms / 1000) % 60), 2)
   , minutes: TimeHelpers.lpad(Math.floor((ms / 1000 / 60)), 2)
   };
