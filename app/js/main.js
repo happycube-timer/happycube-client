@@ -16,6 +16,7 @@ var _ = require('lodash')
  * Load _.mixins
  */
 require('./lib/utils.js');
+require('6to5/polyfill');
 
 var App = React.createClass({
   render: function () {
