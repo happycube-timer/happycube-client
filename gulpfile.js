@@ -9,6 +9,8 @@ var reactify = require('reactify');
 var sass = require('gulp-sass');
 var atomify = require('atomify');
 var browserSync = require('browser-sync');
+var proxy = require('proxy-middleware');
+var url = require('url');
 var reload = browserSync.reload;
 
 // Concatenate & Minify JS
@@ -34,16 +36,6 @@ gulp.task('assets', function () {
     .pipe(gulp.dest('./dist/fonts'));
 });
 
-// Dev server
-gulp.task('connect', function() {
-  connect.server({
-    host: '0.0.0.0',
-    root: 'dist',
-    livereload: false,
-    port: 4001
-  });
-});
-
 // Stylesheets
 gulp.task('stylesheets', function (done) {
   var atomifyConf = {
@@ -67,11 +59,18 @@ gulp.task('html', function () {
   return gulp.src('./app/**/*.html').pipe(gulp.dest('./dist'));
 });
 
+// Browser sync, serve static files and proxy api requests
 gulp.task('browser-sync', function () {
+  var api_proxy = url.parse('http://localhost:3000/api/1');
+  api_proxy.route = '/api';
+
   browserSync({
-    proxy: 'localhost:4001'
-  , port: 4000
+    port: 4000
   , open: false
+  , server: {
+      baseDir: './dist'
+    , middleware: [proxy(api_proxy)]
+    }
   });
 });
 
@@ -83,8 +82,7 @@ gulp.task('watch', function () {
 
 // Default Task
 gulp.task('default', [
-  'connect'
-, 'browser-sync'
+  'browser-sync'
 , 'scripts'
 , 'html'
 , 'stylesheets'
