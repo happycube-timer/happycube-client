@@ -23,7 +23,7 @@ var LoginModal = React.createClass({
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
                 <div className="modal-header">
-                   <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" onClick={this.toggleModal} className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div className="modal-body">
                   <div className="row">
