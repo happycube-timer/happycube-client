@@ -4,10 +4,13 @@ module.exports = function (app, passport, db) {
   var User = require('../db/models/user.js');
 
   /* GET users listing. */
-  router.get('/api/users/:id', function(req, res) {
-    console.log(req.user);
-    console.log(req.params.id);
-    res.send('respond with a resource');
+  router.get('/api/me', function(req, res) {
+    if (req.user) {
+      //TODO lol omit password
+      res.send(req.user);
+    } else {
+      res.status(404).send('Not logged in');
+    }
   });
 
   // mount routes

@@ -1,5 +1,3 @@
-
-
 module.exports = function (app, passport) {
 
   var express = require('express');
@@ -8,6 +6,8 @@ module.exports = function (app, passport) {
   var LocalStrategy = require('passport-local').Strategy;
   var FACEBOOK_APP_ID = '1446294548945297';
   var FACEBOOK_APP_SECRET = '796e2af28484895cae83b87852f5a913';
+  var User = require('../db/collections/user.js');
+  var Promise = require('bluebird');
 
   // configure passport
   passport.use(
@@ -18,7 +18,13 @@ module.exports = function (app, passport) {
         enableProof: false
       },
       function(accessToken, refreshToken, profile, done) {
-        done(null, profile);
+        User.findOrCreate({
+          facebook_id: profile.id
+        , name: profile.displayName
+        , username: 'fb_' + profile.id
+        }, 'facebook_id').then(function (user) {
+          done(null, user);
+        });
       }
     )
   );
@@ -37,7 +43,10 @@ module.exports = function (app, passport) {
   });
 
   passport.deserializeUser(function(id, done) {
-    done(null, {id: id, foo: 'bar'});
+    User.query().where({id: id}).then(function(results){
+      done(null, results[0]);
+    });
+    //TODO catch errors o ke ase
   });
 
   router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['public_profile', 'email']}));
@@ -61,11 +70,6 @@ module.exports = function (app, passport) {
 
   app.get('/login', function(req, res){
     res.send('login');
-  });
-
-  app.get('/test', function(req, res){
-    res.send(req.user);
-    console.log(req.user);
   });
 
   // mount routes

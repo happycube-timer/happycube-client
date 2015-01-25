@@ -64,7 +64,7 @@ gulp.task('browser-sync', function () {
   var api_proxy
     , auth_proxy;
 
-  api_proxy = url.parse('http://localhost:3000/api/1/');
+  api_proxy = url.parse('http://localhost:3000/api/');
   api_proxy.preserveHost = true;
   api_proxy.route = '/api';
 
