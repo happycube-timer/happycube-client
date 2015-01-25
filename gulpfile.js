@@ -61,15 +61,26 @@ gulp.task('html', function () {
 
 // Browser sync, serve static files and proxy api requests
 gulp.task('browser-sync', function () {
-  var api_proxy = url.parse('http://localhost:3000/api/1');
+  var api_proxy
+    , auth_proxy;
+
+  api_proxy = url.parse('http://localhost:3000/api/1/');
+  api_proxy.preserveHost = true;
   api_proxy.route = '/api';
+
+  auth_proxy = url.parse('http://localhost:3000/auth/');
+  auth_proxy.preserveHost = true;
+  auth_proxy.route = '/auth';
 
   browserSync({
     port: 4000
   , open: false
   , server: {
       baseDir: './dist'
-    , middleware: [proxy(api_proxy)]
+    , middleware: [
+        proxy(api_proxy)
+      , proxy(auth_proxy)
+      ]
     }
   });
 });
