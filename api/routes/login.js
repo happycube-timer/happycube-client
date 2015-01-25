@@ -5,6 +5,7 @@ module.exports = function (app, passport) {
   var express = require('express');
   var router = express.Router();
   var FacebookStrategy = require('passport-facebook').Strategy;
+  var LocalStrategy = require('passport-local').Strategy;
   var FACEBOOK_APP_ID = '1446294548945297';
   var FACEBOOK_APP_SECRET = '796e2af28484895cae83b87852f5a913';
 
@@ -13,12 +14,20 @@ module.exports = function (app, passport) {
     new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_APP_SECRET,
-        callbackURL: "http://localhost:3000/auth/facebook/callback",
+        callbackURL: "http://localhost:4000/auth/facebook/callback",
         enableProof: false
       },
       function(accessToken, refreshToken, profile, done) {
-        console.log(profile);
         done(null, profile);
+      }
+    )
+  );
+
+  passport.use(
+    new LocalStrategy(
+      function (username, password, done) {
+        console.log('username', username);
+        console.log('password', password);
       }
     )
   );
@@ -41,7 +50,7 @@ module.exports = function (app, passport) {
       res.redirect('/');
   });
 
-  router.get('/logout', function(req, res){
+  router.get('/auth/logout', function(req, res){
     req.logout();
     res.redirect('/');
   });

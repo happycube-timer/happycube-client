@@ -7,6 +7,7 @@ var _ = require('lodash')
   , Train = require('./screens/Train.js')
   , Learn = require('./screens/Learn.js')
   , Router = require('react-router')
+  , LoginModal = require('./components/LoginModal.js')
   , Link = Router.Link
   , Route = Router.Route
   , DefaultRoute = Router.DefaultRoute
@@ -28,11 +29,7 @@ var App = React.createClass({
             <span>happycube</span>
           </h1>
           <div className="navbar pull-right">
-            <ul className="nav navbar-nav">
-              <li><Link to="play">Play</Link></li>
-              <li><Link to="train">Train</Link></li>
-              <li><Link to="learn">Learn</Link></li>
-            </ul>
+            <LoginModal/>
           </div>
         </header>
         <div className="row">
@@ -49,6 +46,7 @@ var routes = (
     <Route name="play" handler={Play}/>
     <Route name="train" handler={Train}/>
     <Route name="learn" handler={Learn}/>
+    <Route name="_=_" handler={Play}/>
     <DefaultRoute handler={Play}/>
   </Route>
 );
