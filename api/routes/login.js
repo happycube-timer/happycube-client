@@ -6,7 +6,7 @@ module.exports = function (app, passport) {
   var LocalStrategy = require('passport-local').Strategy;
   var FACEBOOK_APP_ID = '1446294548945297';
   var FACEBOOK_APP_SECRET = '796e2af28484895cae83b87852f5a913';
-  var User = require('../db/collections/user.js');
+  var User = require('../db/models/user.js');
   var Promise = require('bluebird');
 
   // configure passport
@@ -32,8 +32,21 @@ module.exports = function (app, passport) {
   passport.use(
     new LocalStrategy(
       function (username, password, done) {
-        console.log('username', username);
-        console.log('password', password);
+        User.where({
+          username: username
+        })
+        .fetch()
+        .then(function (user) {
+          if ((user && !user.isValidPassword(password)) || !user) {
+            //TODO show error message, WTF flash messages?
+            done(null, false);
+            return;
+          }
+
+          debugger;
+
+          done(null, user);
+        });
       }
     )
   );
@@ -50,6 +63,7 @@ module.exports = function (app, passport) {
   });
 
   router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['public_profile', 'email']}));
+  router.post('/auth/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
   router.get('/auth/facebook/callback',
     passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }),
@@ -68,9 +82,9 @@ module.exports = function (app, passport) {
     res.send('hello world');
   });
 
-  app.get('/login', function(req, res){
-    res.send('login');
-  });
+  //app.get('/login', function(req, res){
+    //res.send('login');
+  //});
 
   // mount routes
   app.use('/', router);

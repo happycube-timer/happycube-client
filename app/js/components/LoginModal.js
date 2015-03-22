@@ -57,14 +57,14 @@ var LoginModal = React.createClass({
                     </div>
                   	<div className="col-sm-6">
                       <h4>Log in</h4>
-                      <form action="">
+                      <form action="/auth/login" method="POST">
                         <div className="form-group">
-                          <label for="signup-username"></label>
-                          <input id="signup-username" className="form-control" placeholder="Choose a username" type="text"/>
+                          <label for="username"></label>
+                          <input name="username" className="form-control" placeholder="Choose a username" type="text"/>
                         </div>
                         <div className="form-group">
-                          <label for="signup-password"></label>
-                          <input id="signup-password" className="form-control" placeholder="Password" type="password"/>
+                          <label for="password"></label>
+                          <input name="password" className="form-control" placeholder="Password" type="password"/>
                         </div>
                         <div className="checkbox pull-right">
                           <label>

@@ -1,15 +1,35 @@
 module.exports = function (app, passport, db) {
-  var express = require('express');
-  var router = express.Router();
-  var User = require('../db/models/user.js');
+  var util = require('util');
 
-  /* GET users listing. */
-  router.get('/api/users/:id', function(req, res) {
-    console.log(req.user);
-    console.log(req.params.id);
-    res.send('respond with a resource');
-  });
+  function UserController () {
+    this.initialize();
+  }
 
-  // mount routes
-  app.use('/', router);
+  util.inherits(UserController, require('./base.js'));
+
+  UserController.prototype.model = require('../db/models/user.js');
+  UserController.prototype.collection = require('../db/collections/user.js');
+
+  UserController.prototype.baseUrl = '/api/users/';
+
+  UserController.prototype.create = function (req, res) {
+    if (req.user) {
+      res.status(403).send('You are already signed up.');
+      return;
+    }
+
+    //TODO validate existence
+    //TODO validate params
+
+    var user = this.model.forge(req.body);
+
+    user
+      .setPassword(req.body.password)
+      .save()
+      .then(function () {
+        res.status(200).json(user.toJSON());
+      });
+  };
+
+  app.use('/', (new UserController()).router);
 };

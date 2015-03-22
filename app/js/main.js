@@ -52,5 +52,6 @@ var routes = (
 );
 
 Router.run(routes, function (Handler) {
+  console.log('Handler', Handler);
   React.render(<Handler/>, $('.js-content')[0]);
 });
