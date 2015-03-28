@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react')
   , _ = require('lodash')
   , getClockString = require('../lib/time-helpers.js').getClockString

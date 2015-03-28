@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react')
   , Scanner = require('../components/Scanner.js');
 

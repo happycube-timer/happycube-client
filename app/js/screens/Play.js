@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react')
   , Scoreboard = require('../components/Scoreboard.js')
   , Timer = require('../components/Timer.js');

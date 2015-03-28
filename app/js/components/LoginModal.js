@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react')
   , _ = require('lodash')
   , vent = require('../vent.js');
