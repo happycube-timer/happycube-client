@@ -33,6 +33,12 @@ var Timer = React.createClass({
     vent.emit('time:new', this.state.ellapsed);
   },
   onSpaceBar: function () {
+    this.toggleTimer();
+  },
+  onClick: function () {
+    this.toggleTimer();
+  },
+  toggleTimer: function () {
     if (!this.state.running) {
       this.startTimer();
     } else {
@@ -45,7 +51,7 @@ var Timer = React.createClass({
   },
   render: function () {
     return (
-      <div onKeyDown={this.onKeyDown}>
+      <div onClick={this.onClick}>
         <div>
           {getClockString(this.state.ellapsed)}
         </div>
