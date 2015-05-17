@@ -64,11 +64,11 @@ gulp.task('browser-sync', function () {
   var api_proxy
     , auth_proxy;
 
-  api_proxy = url.parse('http://localhost:3000/api/');
+  api_proxy = url.parse('http://localhost:5000/api/');
   api_proxy.preserveHost = true;
   api_proxy.route = '/api';
 
-  auth_proxy = url.parse('http://localhost:3000/auth/');
+  auth_proxy = url.parse('http://localhost:5000/auth/');
   auth_proxy.preserveHost = true;
   auth_proxy.route = '/auth';
 

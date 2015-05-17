@@ -17,4 +17,8 @@ utils.cartesian = function (...groups) {
   }, [ [] ]);
 };
 
+utils.constants = function (array) {
+  return _.object(_.map(array, (key) => [key, key]));
+};
+
 _.mixin(utils);

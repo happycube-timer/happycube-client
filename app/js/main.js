@@ -17,6 +17,8 @@ var _ = require('lodash')
 require('./lib/utils.js');
 require('6to5/polyfill');
 
+require('./bootstrap.js')();
+
 var App = React.createClass({
   render: function () {
     return (
@@ -50,6 +52,5 @@ var routes = (
 );
 
 Router.run(routes, function (Handler) {
-  console.log('Handler', Handler);
   React.render(<Handler/>, $('.js-content')[0]);
 });

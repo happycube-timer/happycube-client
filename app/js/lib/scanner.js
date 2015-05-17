@@ -8,7 +8,6 @@ class Scanner {
   }
 
   onFrame (context) {
-    console.log('[onFrame] context', context);
   }
 }
 

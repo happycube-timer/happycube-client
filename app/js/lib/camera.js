@@ -90,8 +90,6 @@ class Camera {
 
       var avg_color = CanvasHelpers.getAverageColor(scan_data);
 
-      console.log('avg_color', avg_color);
-
       var [r, g, b, a] = avg_color;
 
       blobs.push({
