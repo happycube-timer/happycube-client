@@ -4,46 +4,26 @@ var React = require('react')
   , vent = require('../vent.js');
 
 var Scoreboard = React.createClass({
-  getInitialState: function () {
-    return {
-      times: JSON.parse(localStorage.getItem('happy_cube:times') || '[]')
-    };
+  onNewSolve: function (new_solve) {
+    //TODO implement
   },
-  componentDidMount: function () {
-    vent.on('time:new', this.onNewTime);
+  removeSolve: function (position) {
+    //TODO implement
   },
-  onNewTime: function (new_time) {
-    var times =  this.state.times
-      , index = _.sortedIndex(times, new_time);
+  getAverage: function (n = this.props.solves.length) {
+    //FIXME
+    var avg = _.reduce(_.map(_(this.props.solves).first(n), (s) => console.log(s)), (a,b) => a+b, 0) / n;
 
-    times.splice(index, 0, new_time);
-
-    this.setState({
-      times: times
-    });
-
-    localStorage.setItem('happy_cube:times', JSON.stringify(this.state.times));
-  },
-  removeTime: function (position) {
-    var times = this.state.times;
-
-    times.splice(position, 1);
-
-    this.setState({
-      times: times
-    });
-
-    localStorage.setItem('happy_cube:times', JSON.stringify(this.state.times));
-  },
-  getAverage: function (n = this.state.times.length) {
-    var avg = _.reduce(_.first(this.state.times, n), (a,b) => a+b, 0) / n;
-
+    return 0;
     return getClockString(avg);
   },
-  getBestTime: function () {
-    return getClockString(_.first(this.state.times));
+  getBestSolve: function () {
+    //FIXME
+    return 0;
+    return getClockString(_.first(this.props.solves));
   },
   render: function () {
+    console.log('this.props', this.props);
     return (
       <div>
         <div className='scoreboard'>
@@ -56,11 +36,11 @@ var Scoreboard = React.createClass({
               </tr>
             </thead>
             <tbody>
-              {_.map(this.state.times, (time, pos) => {
+              {_.map(this.props.solves, (solve, pos) => {
                   return <tr>
                     <td>{pos + 1}</td>
-                    <td>{getClockString(time)}</td>
-                    <td><span className='glyphicon glyphicon-remove' onClick={_.partial(this.removeTime, pos)}></span></td>
+                    <td>{getClockString(solve.ellapsed_time)}</td>
+                    <td><span className='glyphicon glyphicon-remove' onClick={_.partial(this.removeSolve, pos)}></span></td>
                   </tr>
                 })
               }
@@ -69,7 +49,7 @@ var Scoreboard = React.createClass({
         </div>
 
         <h3>Your stats:</h3>
-        <p>Best time: {this.getBestTime()}</p>
+        <p>Best solve: {this.getBestSolve()}</p>
         <p>Overall average: {this.getAverage()}</p>
         <p>Best 10 average: {this.getAverage(10)}</p>
       </div>

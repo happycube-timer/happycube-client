@@ -15,11 +15,9 @@ var Timer = React.createClass({
     keymaster('space', this.onSpaceBar);
   },
   startTimer: function () {
-    console.log('start timer');
     this.start_time = Date.now();
 
     this.interval = setInterval(() => {
-      console.log('interval');
       var now = Date.now()
         , start_time = this.start_time
         , ellapsed_ms = now - start_time;
@@ -28,7 +26,6 @@ var Timer = React.createClass({
     }, 60);
   },
   stopTimer: function () {
-    console.log('stop timer');
     clearInterval(this.interval);
     vent.emit('time:new', this.state.ellapsed);
   },
